@@ -14,18 +14,16 @@ const Pokemon = async (req, res) => {
   const response = await Promise.all(
     req.body.ids.map((id) => getPokemon(id))
   ).then((result) => {
-    return result
-      .filter((el) => el !== null)
-      .map((el) => {
-        if (el.name === "notfound") {
-          return { name: "notfound" };
-        }
-        return {
-          name: el.body.name,
-          types: el.body.types.map((t) => t.type.name),
-          sprite: el.body.sprites.front_default,
-        };
-      });
+    return result.map((el) => {
+      if (el.name === "notfound") {
+        return { name: "notfound" };
+      }
+      return {
+        name: el.body.name,
+        types: el.body.types.map((t) => t.type.name),
+        sprite: el.body.sprites.other.dream_world.front_default,
+      };
+    });
   });
   res.status(200).json(response);
 };
