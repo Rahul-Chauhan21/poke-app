@@ -33,10 +33,14 @@ const PokemonProd = async (req, res) => {
         error: "Ops! Your Pokemon is not discovered yet by Our Pokedex!",
       };
     }
+
     return {
       name: result.body.name,
       types: result.body.types.map((t) => t.type.name),
-      sprite: result.body.sprites.other.dream_world.front_default,
+      sprite:
+        result.body.sprites.other.dream_world.front_default !== null
+          ? result.body.sprites.other.dream_world.front_default
+          : result.body.sprites.other["official-artwork"].front_default,
       xp: result.body.base_experience,
       hp: result.body.stats[0].base_stat,
       weight: result.body.weight,
